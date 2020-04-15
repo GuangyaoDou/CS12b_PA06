@@ -11,31 +11,29 @@ import java.util.Random;
  *
  */
 public class Cluster {
-	ArrayList<Sample> cluster;
+	ArrayList<Sample> Samples;
 	Sample Cluster_Point;
 	
+	
 	public Cluster(ArrayList<Sample> s) {
-		cluster = new ArrayList<Sample>();
+		Samples = new ArrayList<Sample>();
 		for(int i = 0; i<s.size();i++) {
-			cluster.add(s.get(i));
+			Samples.add(s.get(i));
 		}
 	}
 	
-	/**
-	 * Returns an ArrayList of randomly chosen cluster points used when we initiallze K means algorithim
-	 * @param k is the number of cluster points we are looking for in a given cluster
-	 * @return
-	 */
-	public ArrayList<Sample> Centroid(int k){
-		Random random = new Random();
-		ArrayList<Sample> centroid = new ArrayList<Sample>();
-		while(centroid.size()!= k) {
-			int ran = random.nextInt(cluster.size());
-			if(!centroid.contains(cluster.get(ran))){
-				centroid.add(cluster.get(ran));
-			}
+
+	
+	public void printCluster() {
+		System.out.print("This cluster has centroid of: [");
+		System.out.print(Cluster_Point + " ");		
+		System.out.print("]");
+		System.out.println("");
+		System.out.print("This cluster contains sample points: [");
+		for(Sample  s: Samples) {
+			System.out.print(s +"");
 		}
-		return centroid;
+		System.out.print("]");
 	}
 
 }

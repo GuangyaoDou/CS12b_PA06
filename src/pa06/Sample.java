@@ -1,5 +1,4 @@
 package pa06;
-//Gordon
 import java.util.ArrayList;
 
 /**
@@ -18,11 +17,10 @@ public class Sample {
 		}
 	}
 	
-	public Sample(double x, double y, double z) {
+	public Sample(double x, double y) {
 		this.sample = new ArrayList<Double>();
 		sample.add(x);
 		sample.add(y);
-		sample.add(z);
 	}
 	
 	public double getX() {
@@ -33,9 +31,6 @@ public class Sample {
 		return sample.get(1);
 	}
 	
-	public double getZ() {
-		return sample.get(2);
-	}
 	
 	public void setX(double x) {
 		sample.set(0, x);
@@ -43,10 +38,6 @@ public class Sample {
 	
 	public void setY(double y) {
 		sample.set(1, y);
-	}
-	
-	public void setZ(double z) {
-		sample.set(2, z);
 	}
 	
 	public double Distance(Sample s) {
@@ -57,5 +48,8 @@ public class Sample {
 		return Math.sqrt(square);
 	}
 	
+	public String toString() {
+		return "(" + this.getX() + "," + this.getY()+")";
+	}
 
 }
