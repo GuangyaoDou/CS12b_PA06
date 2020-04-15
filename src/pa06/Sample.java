@@ -16,18 +16,46 @@ public class Sample {
 		for (int i=0; i<values.length; i++) {
 			sample.add(values[i]);
 		}
-		
 	}
 	
-	public static void main(String[] args) {
-		System.out.println("testing for the Sample class.");
-		double[] p1 = {1d, 2d, 3.14, 2.71};
-		double[] p2 = {0.1, 1.1, 2.1, 3.1};
-		Sample s1 = new Sample(p1);
-		Sample s2 = new Sample(p2);
-		System.out.println("s1="+s1);
-		System.out.println("s2="+s2);
-		
+	public Sample(double x, double y, double z) {
+		this.sample = new ArrayList<Double>();
+		sample.add(x);
+		sample.add(y);
+		sample.add(z);
 	}
+	
+	public double getX() {
+		return sample.get(0);
+	}
+	
+	public double getY() {
+		return sample.get(1);
+	}
+	
+	public double getZ() {
+		return sample.get(2);
+	}
+	
+	public void setX(double x) {
+		sample.set(0, x);
+	}
+	
+	public void setY(double y) {
+		sample.set(1, y);
+	}
+	
+	public void setZ(double z) {
+		sample.set(2, z);
+	}
+	
+	public double Distance(Sample s) {
+		double square = 0;
+		for(int i = 0; i<s.sample.size(); i++) {
+			square += Math.pow(this.sample.get(i) - s.sample.get(i), 2);
+		}
+		return Math.sqrt(square);
+	}
+	
 
 }
