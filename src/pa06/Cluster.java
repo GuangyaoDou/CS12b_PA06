@@ -22,6 +22,9 @@ public class Cluster {
 		}
 	}
 	
+	public void set_Cluster_Point(Sample s) {
+		this.Cluster_Point = s;
+	}
 
 	
 	public void printCluster() {
