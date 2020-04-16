@@ -60,16 +60,46 @@ public class K_Means {
 //		test.add(b);
 		K_Means k_means = new K_Means(sample, 2);
 		System.out.println("");
-//		k_means.calculate_Centroid();
-//		k_means.clearClusters();
-//		k_means.assignCluster();
-//		k_means.printClusters();
+		k_means.conduct_K_Means();
+		System.out.println("");
+		System.out.println("The Final result is: ");
+		k_means.printClusters();
 	}
 
 	public void conduct_K_Means() {
-
+		boolean done = false;
+		int move = 0;
+		
+		while(!done) {
+			ArrayList<Sample> old_centroid = get_Centroid();
+			calculate_Centroid();
+			clearClusters();
+			assignCluster();
+			
+			move ++;
+			double distance = 0;
+			for(int i = 0; i<centroid.size();i++) {
+				distance += old_centroid.get(i).Distance(centroid.get(i));
+			}
+			System.out.println("----------");
+			System.out.println("Move: "+move);
+			System.out.println("Centroid distances: "+distance);
+			System.out.println("");
+			
+			if(distance == 0) {
+				done = true;
+			}
+		}
 	}
 
+	public ArrayList<Sample> get_Centroid() {
+		ArrayList<Sample> centroid = new ArrayList<Sample>();
+		for(Cluster cluster: clusters) {
+			Sample sample= cluster.Cluster_Point;
+			centroid.add(sample);
+		}
+		return centroid;
+	}
 	/**
 	 * Returns an ArrayList of randomly chosen cluster points used when we
 	 * initialize K means algorithm
@@ -115,7 +145,7 @@ public class K_Means {
 		for (int i = 0; i < samples.size(); i++) {
 			int cluster_id = 0;
 			Sample closest_centro = samples.get(i).find_Closest(centroid);
-			System.out.println(samples.get(i).toString() + ": " + closest_centro);
+//			System.out.println(samples.get(i).toString() + ": " + closest_centro);
 			for (int j = 0; j < clusters.size(); j++) {
 				if (clusters.get(j).Cluster_Point.equals(closest_centro)) {
 					cluster_id = clusters.get(j).id;
