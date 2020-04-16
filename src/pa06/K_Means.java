@@ -20,10 +20,6 @@ public class K_Means {
 			this.samples.add(sample.get(i));
 		}
 		centroid = Centroid(k); // initialize centroid
-		
-//		for (int i = 0; i < centroid.size(); i++) { done testing...
-//			System.out.println(centroid.get(i));
-//		}
 		for (int i = 0; i < NUM_CLUSTERS; i++) {
 			Cluster cluster = new Cluster(i);
 			Sample centro = centroid.get(i);
@@ -66,40 +62,51 @@ public class K_Means {
 		k_means.printClusters();
 	}
 
+	/**
+	 * Calculates the entire k_means algorithm and make sure the algorithm is
+	 * working
+	 */
 	public void conduct_K_Means() {
 		boolean done = false;
 		int move = 0;
-		
-		while(!done) {
+
+		while (!done) {
 			ArrayList<Sample> old_centroid = get_Centroid();
 			calculate_Centroid();
 			clearClusters();
 			assignCluster();
-			
-			move ++;
+
+			move++;
 			double distance = 0;
-			for(int i = 0; i<centroid.size();i++) {
+			for (int i = 0; i < centroid.size(); i++) {
 				distance += old_centroid.get(i).Distance(centroid.get(i));
 			}
 			System.out.println("----------");
-			System.out.println("Move: "+move);
-			System.out.println("Centroid distances: "+distance);
+			System.out.println("Move: " + move);
+			System.out.println("Centroid distances: " + distance);
 			System.out.println("");
-			
-			if(distance == 0) {
+
+			if (distance == 0) {
 				done = true;
 			}
 		}
 	}
 
+	/**
+	 * Have a copy of Centroid that contains all the cluster points in each cluster
+	 * so that we can keep track of the change in Centroid
+	 * 
+	 * @return the copy of Centroid
+	 */
 	public ArrayList<Sample> get_Centroid() {
 		ArrayList<Sample> centroid = new ArrayList<Sample>();
-		for(Cluster cluster: clusters) {
-			Sample sample= cluster.Cluster_Point;
+		for (Cluster cluster : clusters) {
+			Sample sample = cluster.Cluster_Point;
 			centroid.add(sample);
 		}
 		return centroid;
 	}
+
 	/**
 	 * Returns an ArrayList of randomly chosen cluster points used when we
 	 * initialize K means algorithm
@@ -117,10 +124,12 @@ public class K_Means {
 				centroid.add(samples.get(ran));
 			}
 		}
-
 		return centroid;
 	}
 
+	/**
+	 * Prints out all the clusters in this K_means algorithm
+	 */
 	public void printClusters() {
 		for (int i = 0; i < clusters.size(); i++) {
 			System.out.println("Cluster " + i + " :");
