@@ -11,11 +11,12 @@ public class K_Means {
 	private ArrayList<Cluster> clusters;
 	private ArrayList<Sample> centroid = new ArrayList<Sample>();
 	private ArrayList<Sample> samples;
-	public final static int NUM_CLUSTERS = 3;
+	public int NUM_CLUSTERS;
 
 	public K_Means(ArrayList<Sample> sample, int k) {
 		this.samples = new ArrayList<Sample>();
 		this.clusters = new ArrayList<Cluster>();
+		this.NUM_CLUSTERS = k;
 		for (int i = 0; i < sample.size(); i++) {
 			this.samples.add(sample.get(i));
 		}
@@ -33,6 +34,8 @@ public class K_Means {
 
 	public static void main(String[] args) throws FileNotFoundException {
 //		Scanner in = new Scanner(System.in);
+//		System.out.println("How many clusters do you want");
+//		int k = in.nextInt();
 //		System.out.println("Filename: ");
 //		String Filename = in.nextLine();
 //		File textfile = new File(Filename);
