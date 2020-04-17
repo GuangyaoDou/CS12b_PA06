@@ -1,13 +1,11 @@
 package pa06;
 
 import java.io.FileNotFoundException;
-import java.io.File;
-import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class K_Means {
-	private int k;
+	private int k; // number of clusters
 	private ArrayList<Cluster> clusters;
 	private ArrayList<Sample> centroid = new ArrayList<Sample>();
 	private ArrayList<Sample> samples;
