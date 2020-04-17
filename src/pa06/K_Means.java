@@ -1,8 +1,10 @@
 package pa06;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 public class K_Means {
 	private int k; // number of clusters
@@ -18,7 +20,8 @@ public class K_Means {
 		for (int i = 0; i < sample.size(); i++) {
 			this.samples.add(sample.get(i));
 		}
-		centroid = Centroid(k); // initialize centroid
+		centroid = Centroid(); // initialize centroid
+		System.out.println(centroid);
 		for (int i = 0; i < NUM_CLUSTERS; i++) {
 			Cluster cluster = new Cluster(i);
 			Sample centro = centroid.get(i);
@@ -31,36 +34,41 @@ public class K_Means {
 	}
 
 	public static void main(String[] args) throws FileNotFoundException {
-//		Scanner in = new Scanner(System.in);
-//		System.out.println("How many clusters do you want");
-//		int k = in.nextInt();
-//		System.out.println("Filename: ");
-//		String Filename = in.nextLine();
-//		File textfile = new File(Filename);
-//		Scanner data = new Scanner(textfile);
-
-		Sample a = new Sample(1, 2);
-		Sample b = new Sample(2, 2);
-		Sample c = new Sample(4, 5);
-		Sample d = new Sample(-1, -2);
-		Sample e = new Sample(6, 3);
-		Sample f = new Sample(4, 3.333);
+		Scanner in = new Scanner(System.in);
+		System.out.println("How many clusters do you want");
+		int k = in.nextInt();
+		System.out.println("Filename: ");
+		String Filename = in.next();
+		File textfile = new File(Filename);
+		Scanner data = new Scanner(textfile);
 		ArrayList<Sample> sample = new ArrayList<Sample>();
-		sample.add(a);
-		sample.add(b);
-		sample.add(c);
-		sample.add(e);
-		sample.add(d);
-//		ArrayList<Sample> test = new ArrayList<Sample>();
-//		test.add(e);
-//		test.add(a);
-//		test.add(b);
-		K_Means k_means = new K_Means(sample, 2);
-		System.out.println("");
-		k_means.conduct_K_Means();
-		System.out.println("");
-		System.out.println("The Final result is: ");
-		k_means.printClusters();
+		while (data.hasNextLine()) {
+			String line = data.nextLine();
+			Scanner LineScan = new Scanner(line);
+			double x = LineScan.nextDouble();
+			double y = LineScan.nextDouble();
+			Sample insert = new Sample(x, y);
+			sample.add(insert);
+		}
+
+//		Sample a = new Sample(1, 2);
+//		Sample b = new Sample(2, 2);
+//		Sample c = new Sample(4, 5);
+//		Sample d = new Sample(-1, -2);
+//		Sample e = new Sample(6, 3);
+//		Sample f = new Sample(4, 3.333);
+//		ArrayList<Sample> sample = new ArrayList<Sample>();
+//		sample.add(a);
+//		sample.add(b);
+//		sample.add(c);
+//		sample.add(e);
+//		sample.add(d);
+		K_Means k_means = new K_Means(sample, k);
+//		System.out.println("");
+//		k_means.conduct_K_Means();
+//		System.out.println("");
+//		System.out.println("The Final result is: ");
+//		k_means.printClusters();
 	}
 
 	/**
@@ -79,7 +87,7 @@ public class K_Means {
 
 			move++;
 			double distance = 0;
-			for (int i = 0; i < centroid.size(); i++) {
+			for (int i = 0; i < centroid.size()-1; i++) {
 				distance += old_centroid.get(i).Distance(centroid.get(i));
 			}
 			System.out.println("----------");
@@ -116,11 +124,11 @@ public class K_Means {
 	 *          cluster
 	 * @return
 	 */
-	public ArrayList<Sample> Centroid(int k) {
+	public ArrayList<Sample> Centroid() {
 		Random random = new Random();
 		ArrayList<Sample> centroid = new ArrayList<Sample>();
-		while (centroid.size() <= k) {
-			int ran = random.nextInt(samples.size());
+		while (centroid.size() <= NUM_CLUSTERS) {
+			int ran = random.nextInt(samples.size()-1);
 			if (!centroid.contains(samples.get(ran))) {
 				centroid.add(samples.get(ran));
 			}
