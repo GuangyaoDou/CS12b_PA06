@@ -7,9 +7,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class K_Means {
-	private int k; // number of clusters
 	private ArrayList<Cluster> clusters;
-	private ArrayList<Sample> centroid = new ArrayList<Sample>();
+	private ArrayList<Sample> centroid;
 	private ArrayList<Sample> samples;
 	public int NUM_CLUSTERS;
 
@@ -20,8 +19,8 @@ public class K_Means {
 		for (int i = 0; i < sample.size(); i++) {
 			this.samples.add(sample.get(i));
 		}
-		centroid = Centroid(); // initialize centroid
-		System.out.println(centroid);
+		this.centroid = Centroid(); // initialize centroid
+		System.out.println("Initial Centroid is :"+centroid);
 		for (int i = 0; i < NUM_CLUSTERS; i++) {
 			Cluster cluster = new Cluster(i);
 			Sample centro = centroid.get(i);
@@ -37,18 +36,21 @@ public class K_Means {
 		Scanner in = new Scanner(System.in);
 		System.out.println("How many clusters do you want");
 		int k = in.nextInt();
+		int i = 0; 
+		int lines_data = 20;
 		System.out.println("Filename: ");
 		String Filename = in.next();
 		File textfile = new File(Filename);
 		Scanner data = new Scanner(textfile);
 		ArrayList<Sample> sample = new ArrayList<Sample>();
-		while (data.hasNextLine()) {
+		while (data.hasNextLine() && i<lines_data) {
 			String line = data.nextLine();
 			Scanner LineScan = new Scanner(line);
 			double x = LineScan.nextDouble();
 			double y = LineScan.nextDouble();
 			Sample insert = new Sample(x, y);
 			sample.add(insert);
+			i++;
 		}
 
 //		Sample a = new Sample(1, 2);
@@ -64,11 +66,11 @@ public class K_Means {
 //		sample.add(e);
 //		sample.add(d);
 		K_Means k_means = new K_Means(sample, k);
-//		System.out.println("");
-//		k_means.conduct_K_Means();
-//		System.out.println("");
-//		System.out.println("The Final result is: ");
-//		k_means.printClusters();
+		System.out.println("");
+		k_means.conduct_K_Means();
+		System.out.println("");
+		System.out.println("The Final result is: ");
+		k_means.printClusters();
 	}
 
 	/**
@@ -93,8 +95,9 @@ public class K_Means {
 			System.out.println("----------");
 			System.out.println("Move: " + move);
 			System.out.println("Centroid distances: " + distance);
+			
+			System.out.println("Old_centroid is: " + old_centroid);
 			System.out.println("");
-
 			if (distance == 0) {
 				done = true;
 			}
@@ -128,7 +131,10 @@ public class K_Means {
 		Random random = new Random();
 		ArrayList<Sample> centroid = new ArrayList<Sample>();
 		while (centroid.size() <= NUM_CLUSTERS) {
-			int ran = random.nextInt(samples.size()-1);
+			if(centroid.size()>= NUM_CLUSTERS) {
+				break;
+			}
+			int ran = random.nextInt(samples.size());
 			if (!centroid.contains(samples.get(ran))) {
 				centroid.add(samples.get(ran));
 			}
